@@ -20,14 +20,9 @@ shared_examples_for "RedisImpersonator" do
   end
 
   describe 'manipulating key values' do
-    it 'it can get key values' do
+    it 'it can set and get key values' do
       impersonator.set('key', 'value').should == 'value'
       impersonator.get('key').should == 'value'
-    end
-  
-    it 'can create new key values' do
-      impersonator.set('key', 'value').should == 'value'
-      Swagger::ActiveRecord::ResqueValue.first.value.should == 'value'
     end
   
     it 'can delete key values' do
@@ -55,13 +50,7 @@ shared_examples_for "RedisImpersonator" do
   end
 
   describe 'managing workes in a set' do
-    it 'can add workers to the queue' do
-      worker = Resque::Worker.new(queues = ['queue1'])
-      impersonator.sadd(:workers, worker)
-      Swagger::ActiveRecord::ResqueValue.first.value.should == worker.to_s
-    end
-      
-    it 'returns all values in the workers set' do
+    it 'adds to and lists values in the workers set' do
       worker = Resque::Worker.new(queues = ['queue1'])
       impersonator.sadd(:workers, worker)
       impersonator.smembers(:workers).first.should == worker.to_s
