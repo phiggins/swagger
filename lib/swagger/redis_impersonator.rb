@@ -12,10 +12,10 @@ module Swagger
     end
 
     module ClassMethods  
-      def swallow(method, return_value = nil)
+      def swallow(method, value=nil)
         define_method(method) do |*args|
           LOGGER.write("RedisImpersonator: Swallowed #{method} with the following arguments #{args.inspect}") if defined?(LOGGER)
-          return_value
+          value
         end
       end
     end

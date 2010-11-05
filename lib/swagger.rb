@@ -6,6 +6,6 @@ require 'swagger/version'
 
 module Swagger
   class << self
-    attr_accessor :impersonator_klass
+    attr_accessor :impersonator_klass, :logger
   end
 end
