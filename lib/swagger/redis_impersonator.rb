@@ -1,16 +1,24 @@
 module Swagger
-  class RedisImpersonator
+  module RedisImpersonator
+    def self.included(base)
+      base.class_eval do 
+        extend ClassMethods
 
-    def self.swallow(method, return_value = nil)
-      define_method(method) do |*args|
-        LOGGER.write("RedisImpersonator: Swallowed #{method} with the following arguments #{args.inspect}") if defined?(LOGGER)
-        return_value
+        swallow(:namespace=)
+        swallow(:namespace, 'not applicable')
+        swallow(:server, self.to_s.split("::")[-1])
+        swallow(:info,   self.inspect)
       end
     end
-    swallow(:namespace=)
-    swallow(:namespace, 'not applicable')
-    swallow(:server, 'ActiveRecord')
-    swallow(:info,   self.inspect)
+
+    module ClassMethods  
+      def swallow(method, return_value = nil)
+        define_method(method) do |*args|
+          LOGGER.write("RedisImpersonator: Swallowed #{method} with the following arguments #{args.inspect}") if defined?(LOGGER)
+          return_value
+        end
+      end
+    end
 
     def srem(set_name, value)
     end

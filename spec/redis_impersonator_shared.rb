@@ -11,8 +11,12 @@ shared_examples_for "RedisImpersonator" do
     @klass.clear
   end
 
+  it 'responds to server' do
+    impersonator.server.should == @klass.to_s.split("::")[-1]
+  end
+
   it 'responds to info' do
-    impersonator.info.should_not be_nil
+    impersonator.info.should match /#{@klass}/
   end
   
   it 'swallows calls to namespace' do

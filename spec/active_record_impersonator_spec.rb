@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'swagger/active_record'
+require 'swagger/impersonators/active_record'
 
-describe "Swagger::ActiveRecord" do
+describe "Swagger::Impersonators::ActiveRecord" do
   before :all do
     Resque.swagger!
 
@@ -18,13 +18,13 @@ describe "Swagger::ActiveRecord" do
 
   describe "Swagger" do
     it 'sets impersonator_klass' do
-      Swagger.impersonator_klass.should == Swagger::ActiveRecord
+      Swagger.impersonator_klass.should == Swagger::Impersonators::ActiveRecord
     end
   end
 
   describe "Resque" do
     it 'swaps redis implementation with impersonator' do
-      Resque.redis.should be_a(Swagger::ActiveRecord)
+      Resque.redis.should be_a(Swagger::Impersonators::ActiveRecord)
     end  
     
     it 'can connect to the database' do
