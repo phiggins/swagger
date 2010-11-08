@@ -12,7 +12,7 @@ begin
     gem.authors = ["mdeiters"]
     gem.add_development_dependency "rspec", "> 2"
     gem.add_development_dependency "sqlite3-ruby"
-    gem.add_dependency "activerecord"
+    gem.add_development_dependency "activerecord"
     gem.add_dependency "resque"
   end
   Jeweler::GemcutterTasks.new
@@ -38,7 +38,7 @@ task :default => :spec
 
 require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|
-  require File.expand_path( File.dirname(__FILE__) + "/lib/swagger/version" )
+  require File.expand_path("lib/swagger/version")
 
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title = "swagger #{Swagger.version}"
