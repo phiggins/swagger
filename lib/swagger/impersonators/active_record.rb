@@ -130,5 +130,4 @@ module Swagger
   end
 end
 
-$stderr.puts "Activating Swagger::Impersonators::ActiveRecord"
 Swagger.impersonator_klass = Swagger::Impersonators::ActiveRecord
