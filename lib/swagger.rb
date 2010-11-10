@@ -1,3 +1,6 @@
+# HAX!
+$LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__) + '/swagger/stubs'))
+
 require 'resque'
 
 require 'swagger/redis_impersonator'

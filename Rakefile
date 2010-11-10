@@ -45,3 +45,33 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
+
+namespace "resque" do
+  resque_dir = "resque"
+
+  file resque_dir do
+    raise "No local resque found. Either 'git clone' it here or symlink a local copy."
+    #puts "No local resque found, fetching latest from github."
+
+    # https://github.com/pivotal/erector/blob/master/Rakefile#L142
+    #oldenv = ENV.dup
+    #ENV.delete_if {|k,v| k =~ /^GIT_/ }
+    #sh "git clone git://github.com/defunkt/resque.git #{resque_dir}"
+    #ENV = oldenv
+  end
+
+  require 'rake/testtask'
+  
+  Dir[ File.expand_path("lib/swagger/impersonators/*.rb") ].each do |impersonator|
+    name = File.basename(impersonator, ".rb")
+
+    # HAX: Maybe just shell out and use resque's rake file?
+    Rake::TestTask.new name do |test|
+      test.libs << "#{resque_dir}/test" << "#{resque_dir}/lib" << "lib" << "spec"
+      test.ruby_opts = ["-rubygems -r swagger -r #{name}_spec_helper" ]
+      test.test_files = FileList["#{resque_dir}/test/**/*_test.rb"]
+    end
+
+    task name => resque_dir
+  end
+end
