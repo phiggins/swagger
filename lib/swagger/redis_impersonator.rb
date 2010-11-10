@@ -20,6 +20,9 @@ module Swagger
       end
     end
 
+    def flushall
+    end
+
     def srem(set_name, value)
     end
     

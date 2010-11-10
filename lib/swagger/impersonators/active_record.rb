@@ -10,7 +10,7 @@ module Swagger
 
       class ResqueValue < ::ActiveRecord::Base ; end
 
-      def self.clear
+      def flushall
         ResqueValue.delete_all
       end
       
@@ -130,4 +130,5 @@ module Swagger
   end
 end
 
+$stderr.puts "Activating Swagger::Impersonators::ActiveRecord"
 Swagger.impersonator_klass = Swagger::Impersonators::ActiveRecord

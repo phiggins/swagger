@@ -8,7 +8,7 @@ shared_examples_for "RedisImpersonator" do
   let(:impersonator) { @klass.new }
 
   before :each do
-    @klass.clear
+    impersonator.flushall
   end
 
   it 'responds to server' do
