@@ -138,6 +138,10 @@ module Swagger
         return "string" unless record.key_type
         record.key_type
       end
+
+      def scard(key)
+        ResqueValue.count(:conditions => {:key => key, :key_type => SET})
+      end
     end
   end
 end

@@ -216,4 +216,25 @@ shared_examples_for "RedisImpersonator" do
       impersonator.type("nonexistant_key").should == "none"
     end
   end
+
+  describe "#scard" do
+    it "returns correct size for a set with elements" do
+      impersonator.sadd("some_set", "one")
+      impersonator.sadd("some_set", "two")
+      impersonator.sadd("some_set", "three")
+
+      impersonator.scard("some_set").should == 3
+    end
+
+    it "returns correct size for an empty set" do
+      impersonator.sadd("some_set", "one")
+      impersonator.srem("some_set", "one")
+
+      impersonator.scard("some_set").should == 0
+    end
+
+    it "returns correct size for a nonexistant set" do
+      impersonator.scard("some_set").should == 0
+    end
+  end
 end
