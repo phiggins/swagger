@@ -131,6 +131,13 @@ module Swagger
         item = ResqueValue.first(:conditions => {:key => key}, :offset => index)
         item.value if item
       end
+
+      def type(key)
+        record = ResqueValue.first(:conditions => {:key => key})
+        return "none" unless record
+        return "string" unless record.key_type
+        record.key_type
+      end
     end
   end
 end

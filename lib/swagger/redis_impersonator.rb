@@ -31,6 +31,6 @@ module Swagger
 
     REDIS_METHODS = %w( flushall srem smembers sismember sadd set get del 
       exists incrby decrby mapped_mget mget llen lset lrange lrem lpop rpush 
-      ltrim keys lindex )
+      ltrim keys lindex type )
   end
 end    

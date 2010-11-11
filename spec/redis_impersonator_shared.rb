@@ -195,4 +195,25 @@ shared_examples_for "RedisImpersonator" do
     impersonator.decrby('something', 1)
     impersonator.get('something').should == '1'
   end
+
+  describe "#type" do
+    it "returns correct value for list" do
+      impersonator.rpush("some_queue", "value")
+      impersonator.type("some_queue").should == "list"
+    end
+
+    it "returns correct value for set" do
+      impersonator.sadd("some_set", "value")
+      impersonator.type("some_set").should == "set"
+    end
+
+    it "returns correct value for string" do
+      impersonator.set("some_key", "some_value")
+      impersonator.type("some_key").should == "string"
+    end
+
+    it "returns correct value for nonexistant key" do
+      impersonator.type("nonexistant_key").should == "none"
+    end
+  end
 end
