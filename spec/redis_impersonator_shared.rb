@@ -154,6 +154,23 @@ shared_examples_for "RedisImpersonator" do
       impersonator.lrange('some_queue', 0, 5).should == ['1','2','3','4','5','6']
       impersonator.lrange('some_queue', 1, 3).should == ['2','3','4']
     end
+
+    it "returns a specific value with lindex" do
+      impersonator.rpush('some_queue', 'zero')
+      impersonator.rpush('some_queue', 'one')
+      impersonator.rpush('some_queue', 'two')
+
+      impersonator.lindex('some_queue', 0).should == 'zero'
+      impersonator.lindex('some_queue', 2).should == 'two'
+    end
+
+    it "returns nil if index out of range with lindex" do
+      impersonator.rpush('some_queue', 'zero')
+      impersonator.rpush('some_queue', 'one')
+      impersonator.rpush('some_queue', 'two')
+
+      impersonator.lindex('some_queue', 50).should == nil 
+    end
   end
   
   it 'should increment a value' do
