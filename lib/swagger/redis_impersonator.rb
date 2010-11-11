@@ -18,71 +18,19 @@ module Swagger
           value
         end
       end
+
+      def lint
+        diff = REDIS_METHODS - instance_methods.map {|m| m.to_s }
+        unless diff.empty?
+          raise LintError, "Missing method(s) #{diff.join(", ")}"
+        end
+      end
     end
 
-    def flushall
-    end
+    class LintError < StandardError ; end
 
-    def srem(set_name, value)
-    end
-    
-    def smembers(set_name)
-    end
-
-    def sismember(set_name, value)
-    end
-    
-    def sadd(set_name, value)
-    end
-    
-    def set(key, value)
-    end
-
-    def get(key)
-    end
-    
-    def del(key)
-    end
-    
-    def exists(key)
-    end
-    
-    def incrby(key, value)
-    end
-    
-    def decrby(key, value)
-    end
-      
-    def mapped_mget(*keys)
-    end
-    
-    def mget(*keys)
-    end    
-        
-    def llen(list_name)
-    end
-    
-    def lset(list_name, index, value)
-    end
-      
-    def lrange(list_name, start_range, end_range)
-    end
-
-    
-    def lrem(list_name, count, value)
-    end
-    
-    def lpop(list_name)
-    end
-    
-    def rpush(list_name, value)
-    end
-    
-    def ltrim(list_name, start_range, end_range)
-    end
-    
-    def keys(pattern = '*')
-    end
-
+    REDIS_METHODS = %w( flushall srem smembers sismember sadd set get del 
+      exists incrby decrby mapped_mget mget llen lset lrange lrem lpop rpush 
+      ltrim keys )
   end
-end
+end    

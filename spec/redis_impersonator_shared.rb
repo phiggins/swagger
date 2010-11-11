@@ -1,22 +1,23 @@
 require 'spec_helper'
 
 shared_examples_for "RedisImpersonator" do
-  before :all do
-    @klass = Swagger.impersonator_klass
-  end
-
-  let(:impersonator) { @klass.new }
+  let(:klass) { Swagger.impersonator_klass }
+  let(:impersonator) { klass.new }
 
   before :each do
     impersonator.flushall
   end
 
+  it 'passes lint' do
+    lambda { klass.lint }.should_not raise_error
+  end
+
   it 'responds to server' do
-    impersonator.server.should == @klass.to_s.split("::")[-1]
+    impersonator.server.should == klass.to_s.split("::")[-1]
   end
 
   it 'responds to info' do
-    impersonator.info.should match /#{@klass}/
+    impersonator.info.should match /#{klass}/
   end
   
   it 'swallows calls to namespace' do

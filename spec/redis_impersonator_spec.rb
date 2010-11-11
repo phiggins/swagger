@@ -20,4 +20,26 @@ describe Swagger::RedisImpersonator do
       klass.new.power_level.should == 9001
     end
   end
+
+  describe ".lint" do
+    it "raises a LintError for a bad RedisImpersonator" do
+      klass = Class.new do
+        include Swagger::RedisImpersonator
+      end
+
+      lambda { klass.lint }.should raise_error Swagger::RedisImpersonator::LintError
+    end
+
+    it "doesn't raise LintError for a good RedisImpersonator" do
+      klass = Class.new do
+        include Swagger::RedisImpersonator
+
+        Swagger::RedisImpersonator::REDIS_METHODS.each do |m|
+          define_method(m) {|*args| 1+1 }
+        end
+      end
+
+      lambda { klass.lint }.should_not raise_error
+    end
+  end
 end
