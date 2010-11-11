@@ -4,8 +4,6 @@ module Swagger
       base.class_eval do 
         extend ClassMethods
 
-        swallow(:namespace=)
-        swallow(:namespace, 'not applicable')
         swallow(:server, self.to_s.split("::")[-1])
         # XXX: Called in exactly one place, so stub for now.
         # Might be nice to have some useful stats though.
@@ -34,5 +32,8 @@ module Swagger
     REDIS_METHODS = %w( flushall srem smembers sismember sadd set get del 
       exists incrby decrby mapped_mget mget llen lset lrange lrem lpop rpush 
       ltrim keys lindex type )
+    
+    attr_accessor :namespace
+    def namespace ; @namespace || :resque ; end
   end
 end    

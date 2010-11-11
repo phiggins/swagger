@@ -19,9 +19,14 @@ shared_examples_for "RedisImpersonator" do
   it 'stubs #info' do
     impersonator.info.should == []
   end
+
+  it 'defaults to :resque for namespace' do
+    impersonator.namespace.should == :resque
+  end
   
-  it 'swallows calls to namespace' do
-    lambda{impersonator.namespace = 'value'}.should_not raise_error    
+  it 'parrots back namespace if one is set' do
+    impersonator.namespace = :test_namespace
+    impersonator.namespace.should == :test_namespace
   end
 
   describe 'manipulating key values' do
