@@ -88,6 +88,15 @@ shared_examples_for "RedisImpersonator" do
       impersonator.del(:test)
       impersonator.smembers(:test).should be_empty
     end
+
+    it 'returns set members sorted' do
+      # XXX: redis set is sorted? Couldn't find docs, but resque tests relied on it.
+      impersonator.sadd(:test, 'one')
+      impersonator.sadd(:test, 'zebra')
+      impersonator.sadd(:test, 'two')
+
+      impersonator.smembers(:test).should == %w( one two zebra )
+    end
   end
   
   describe 'working with lists' do

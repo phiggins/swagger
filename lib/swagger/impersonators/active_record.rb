@@ -20,7 +20,7 @@ module Swagger
       end
       
       def smembers(set_name)
-        ResqueValue.all(:conditions => {:key => set_name.to_s, :key_type => SET}).map(&:value)
+        ResqueValue.all(:conditions => {:key => set_name, :key_type => SET}).map(&:value).sort
       end
 
       def sismember(set_name, value)
