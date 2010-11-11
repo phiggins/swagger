@@ -7,7 +7,9 @@ module Swagger
         swallow(:namespace=)
         swallow(:namespace, 'not applicable')
         swallow(:server, self.to_s.split("::")[-1])
-        swallow(:info,   self.inspect)
+        # XXX: Called in exactly one place, so stub for now.
+        # Might be nice to have some useful stats though.
+        swallow(:info, [])
       end
     end
 

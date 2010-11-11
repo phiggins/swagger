@@ -16,8 +16,8 @@ shared_examples_for "RedisImpersonator" do
     impersonator.server.should == klass.to_s.split("::")[-1]
   end
 
-  it 'responds to info' do
-    impersonator.info.should match /#{klass}/
+  it 'stubs #info' do
+    impersonator.info.should == []
   end
   
   it 'swallows calls to namespace' do
