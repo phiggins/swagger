@@ -129,7 +129,7 @@ module Swagger
 
       def lindex(key, index)
         item = ResqueValue.first(:conditions => {:key => key}, :offset => index)
-        item ? item.value : nil   # Preserve redis semantics
+        item.value if item
       end
     end
   end
