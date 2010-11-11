@@ -18,5 +18,5 @@ describe "Swagger::Impersonators::ActiveRecord" do
     end
   end
 
-  it_should_behave_like "RedisImpersonator"
+  it_behaves_like "RedisImpersonator"
 end

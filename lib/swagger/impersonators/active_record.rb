@@ -126,6 +126,11 @@ module Swagger
         raise "Pattern '#{pattern}' not supported" if pattern != '*'
         ResqueValue.all(:select => 'DISTINCT resque_values.key').map(&:key)
       end
+
+      def lindex(key, index)
+        item = ResqueValue.first(:conditions => {:key => key}, :offset => index)
+        item ? item.value : nil   # Preserve redis semantics
+      end
     end
   end
 end
