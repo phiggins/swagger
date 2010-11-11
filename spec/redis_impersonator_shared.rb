@@ -119,6 +119,13 @@ shared_examples_for "RedisImpersonator" do
       impersonator.lpop('some_queue').should == 'value'
       impersonator.lpop('some_queue').should be_nil
     end
+
+    it '#lpop returns the first item in the list' do
+      impersonator.rpush('some_queue', "one")
+      impersonator.rpush('some_queue', "two")
+
+      impersonator.lpop('some_queue').should == "one"
+    end
     
     it 'should tell you how many items are in a list' do
       impersonator.rpush('some_queue', 'one')

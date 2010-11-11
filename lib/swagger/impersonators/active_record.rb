@@ -102,12 +102,12 @@ module Swagger
         ResqueValue.delete_all(:key => list_name.to_s, :key_type=> LIST, :value => value )
       end
       
-      def lpop(list_name)
+      def lpop(list)
         ResqueValue.transaction do
-          last = ResqueValue.last(:conditions => {:key => list_name.to_s, :key_type => LIST}, :lock => true)
-          if last
-            last.destroy
-            return last.value
+          first = ResqueValue.first(:conditions => {:key => list, :key_type => LIST}, :lock => true)
+          if first
+            first.destroy
+            return first.value
           end
         end
       end
